@@ -5,11 +5,11 @@ async function getAvailable(origin, destination, date) {
     return fetch(`https://ws.alibaba.ir/api/v2/bus/available?orginCityCode=${origin}&destinationCityCode=${destination}&requestDate=${date}&passengerCount=1`).then(r => r.json());
 }
 
-export async function checkHasAvailable(origin, destination, date) {
+export async function checkHasAvailable(origin, destination, date, hours) {
     const {result: {availableList: items}} = await getAvailable(origin, destination, date.replace(/T.+/, ''));
     return items
         .filter(item => item.availableSeats > 0)
-        .filter(item => +new Date(item.departureDateTime) >= +new Date(date))
+        .filter(item => new Date(item.departureDateTime).getHours() >= hours[0] && new Date(item.departureDateTime).getHours() <= hours[1] )
 }
 
 export function sendNotification(message, phone) {
