@@ -1,4 +1,4 @@
-import {checkHasAvailable, sendNotification} from "./utils.js";
+import {checkHasAvailable, sendAvailableNotification} from "./utils.js";
 
-await checkHasAvailable('2022-09-09T22:00:00');
-const res = await sendNotification('asdasd', ['9136865204']);
+const items = await checkHasAvailable('21310000', '11320000', '2022-09-09T23:00:00');
+if (items.length) await sendAvailableNotification(items);
