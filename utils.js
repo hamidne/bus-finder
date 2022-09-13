@@ -6,7 +6,7 @@ async function getAvailable(origin, destination, date) {
 }
 
 export async function checkHasAvailable(origin, destination, date, hours) {
-    const {result: {availableList: items}} = await getAvailable(origin, destination, date.replace(/T.+/, ''));
+    const {result: {availableList: items}} = await getAvailable(origin, destination, date);
     return items
         .filter(item => item.availableSeats > 0)
         .filter(item => new Date(item.departureDateTime).getHours() >= hours[0] && new Date(item.departureDateTime).getHours() <= hours[1] )
